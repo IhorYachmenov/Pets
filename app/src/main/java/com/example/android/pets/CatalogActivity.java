@@ -29,10 +29,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
-import data.PetContract.PetEntry;
-import data.PetDbHelper;
+import com.example.android.pets.data.PetContract.PetEntry;
+import com.example.android.pets.data.PetDbHelper;
 
 /**
  * Displays list of pets that were entered and stored in the app.
@@ -139,9 +137,13 @@ public class CatalogActivity extends AppCompatActivity {
                 String currentBreed = cursor.getString(breedColumnIndex);
                 int currentGender = cursor.getInt(genderColumnIndex);
                 int currentWeight = cursor.getInt(weightColumnIndex);
+
                 // Display the values from each column of the current row in the cursor in the TextView
                 displayView.append(("\n" + currentID + " - " +
-                        currentName + " - " + currentBreed + " - " + currentGender + " - " + currentWeight));
+                        currentName + " - " +
+                        currentBreed + " - " +
+                        currentGender + " - " +
+                        currentWeight));
             }
 
         } finally {

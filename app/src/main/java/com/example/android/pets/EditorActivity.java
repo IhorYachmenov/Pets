@@ -15,7 +15,6 @@
  */
 package com.example.android.pets;
 
-import android.content.ClipData;
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -31,8 +30,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import data.PetContract.PetEntry;
-import data.PetDbHelper;
+import com.example.android.pets.data.PetContract.PetEntry;
+import com.example.android.pets.data.PetDbHelper;
 
 /**
  * Allows user to create a new pet or edit an existing one.
