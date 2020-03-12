@@ -11,6 +11,7 @@ import android.os.CancellationSignal;
 import android.provider.BaseColumns;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 /**
  * {@link ContentProvider} for Pets app.
@@ -137,7 +138,17 @@ public class PetProvider extends ContentProvider {
      */
     private Uri insertPet(Uri uri, ContentValues values) {
 
-        // TODO: Insert a new pet into the pets database table with the given ContentValues
+        // Get writeable database
+        SQLiteDatabase database = mDbHelper.getWritableDatabase();
+
+        // Insert the new pet with the given values
+        long id = database.insert(PetContract.PetEntry.TABLE_NAME, null, values);
+
+        // If the ID is -1, then the insertion failed. Log an error and return null.
+        if (id == -1) {
+            Log.e(LOG_TAG, "Failed to insert row for " + uri);
+            return null;
+        }
 
         // Once we know the ID of the new row in the table,
         // return the new URI with the ID appended to the end of it
