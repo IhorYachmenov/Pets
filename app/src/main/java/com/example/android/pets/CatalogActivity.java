@@ -79,7 +79,7 @@ public class CatalogActivity extends AppCompatActivity {
         // and pass the context, which is the current activity.
         //mDbHelper = new PetDbHelper(this);
 
-        ContentResolver content = content.query()
+
 
         // Define a projection thar specifies which columns from
         // the db you will actually use after this query
@@ -91,11 +91,9 @@ public class CatalogActivity extends AppCompatActivity {
                 PetEntry.COLUMN_PET_WEIGHT
         };
 
-        Cursor cursor = db.query(
-                PetEntry.TABLE_NAME,
+        Cursor cursor = getContentResolver().query(
+                PetEntry.CONTENT_URI,
                 projection,
-                null,
-                null,
                 null,
                 null,
                 null);
