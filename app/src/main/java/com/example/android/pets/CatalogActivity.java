@@ -15,6 +15,7 @@
  */
 package com.example.android.pets;
 
+import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
@@ -78,8 +79,7 @@ public class CatalogActivity extends AppCompatActivity {
         // and pass the context, which is the current activity.
         //mDbHelper = new PetDbHelper(this);
 
-        // Create and/or open a database to read from it
-        SQLiteDatabase db = mDbHelper.getReadableDatabase();
+        ContentResolver content = content.query()
 
         // Define a projection thar specifies which columns from
         // the db you will actually use after this query
