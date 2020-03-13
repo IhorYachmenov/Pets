@@ -104,10 +104,19 @@ public class PetProvider extends ContentProvider {
 
     /**
      * Returns the MIME type of data for the content URI.
+     *  The purpose of this method is to return a String that describes the type of the data stored at the input Uri.
      */
     @Override
     public String getType(Uri uri) {
-        return null;
+        final int match = sUriMatcher.match(uri);
+        switch (match) {
+            case PETS:
+                return PetContract.PetEntry.CONTENT_LIST_TYPE;
+            case PET_ID:
+                return PetContract.PetEntry.CONTENT_ITEM_TYPE;
+            default:
+                throw new IllegalStateException("Unknown URI " + uri + " with match " + match);
+        }
     }
 
     @Override
