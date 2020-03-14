@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.TextView;
 
+import com.example.android.pets.data.PetContract;
+
 import java.util.Date;
 
 /**
@@ -57,13 +59,18 @@ public class PetCursorAdapter extends CursorAdapter {
     public void bindView(View view, Context context, Cursor cursor) {
         // TODO: Fill out this method
         // Find fields to populate in inflated template
-        TextView name = (TextView) view.findViewById(R.id.name);
-        TextView breed = (TextView) view.findViewById(R.id.breed);
-        // Extract properties from cursor
-        String body = cursor.getString(cursor.getColumnIndexOrThrow("name"));
-        String priority = cursor.getString(cursor.getColumnIndexOrThrow("breed"));
+        TextView nameTextView = (TextView) view.findViewById(R.id.name);
+        TextView breedTextView = (TextView) view.findViewById(R.id.breed);
+        // Find the columns of pet attributes that we're interested in
+        int nameColumnIndex = cursor.getColumnIndex(PetContract.PetEntry.COLUMN_PET_NAME);
+        int breedColumnIndex = cursor.getColumnIndex(PetContract.PetEntry.COLUMN_PET_BREED);
+
+        // Read the columns pet attributes thar we're interested in
+        String name = cursor.getString(nameColumnIndex);
+        String breed = cursor.getString(breedColumnIndex);
+
         // Populate fields with extracted properties
-        name.setText(body);
-        breed.setText(String.valueOf(priority));
+        nameTextView.setText(name);
+        breedTextView.setText(breed);
     }
 }
