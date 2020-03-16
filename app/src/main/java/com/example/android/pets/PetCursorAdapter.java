@@ -2,6 +2,7 @@ package com.example.android.pets;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,7 +58,7 @@ public class PetCursorAdapter extends CursorAdapter {
      */
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
-        // TODO: Fill out this method
+
         // Find fields to populate in inflated template
         TextView nameTextView = (TextView) view.findViewById(R.id.name);
         TextView breedTextView = (TextView) view.findViewById(R.id.breed);
@@ -66,11 +67,17 @@ public class PetCursorAdapter extends CursorAdapter {
         int breedColumnIndex = cursor.getColumnIndex(PetContract.PetEntry.COLUMN_PET_BREED);
 
         // Read the columns pet attributes thar we're interested in
-        String name = cursor.getString(nameColumnIndex);
-        String breed = cursor.getString(breedColumnIndex);
+        String petName = cursor.getString(nameColumnIndex);
+        String petBreed = cursor.getString(breedColumnIndex);
+
+        // If the pet breed is empty string or null, then use some default text
+        // that says "Unknown breed", so the TextView isn't blank.
+        if (TextUtils.isEmpty(petBreed)) {
+            petBreed = context.getString(R.string.unknown_breed);
+        }
 
         // Populate fields with extracted properties
-        nameTextView.setText(name);
-        breedTextView.setText(breed);
+        nameTextView.setText(petName);
+        breedTextView.setText(petBreed);
     }
 }
