@@ -23,8 +23,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
+import android.app.LoaderManager;
+import android.content.CursorLoader;
+import android.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -97,6 +98,8 @@ public class CatalogActivity extends AppCompatActivity implements LoaderManager.
             }
         });
 
+        // Kick off the loader
+        getLoaderManager().initLoader(PET_LOADER, null, this);
 
     }
 
@@ -175,16 +178,30 @@ public class CatalogActivity extends AppCompatActivity implements LoaderManager.
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return null;
+        // Define a projection that specifies the columns from the table we care about.
+        String[] projection = {
+                PetEntry._ID,
+                PetEntry.COLUMN_PET_NAME,
+                PetEntry.COLUMN_PET_BREED };
+
+        // This loader will execute the ContentProvider's query method on a background thread
+        return new CursorLoader(this,   // Parent activity context
+                PetEntry.CONTENT_URI,   // Provider content URI to query
+                projection,             // Columns to include in the resulting Cursor
+                null,                   // No selection clause
+                null,                   // No selection arguments
+                null);                  // Default sort order
     }
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-
+        // Update {@link PetCursorAdapter} with this new cursor containing updated pet data
+        mCursorAdapter.swapCursor(data);
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-
+        // Callback called when the data needs to be deleted
+        mCursorAdapter.swapCursor(null);
     }
 }
